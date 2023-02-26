@@ -31,5 +31,14 @@ jobs:
             node_modules
           key: node-v${{ matrix.node-version }}-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
 
-      - name: check node.js version
+      - name: check Node.js version
         run: node -v
+
+      - name: exec yarn install
+        run: yarn install
+
+      - name: check Nest.js version
+        run: nest -v
+
+      - name: exec yarn test
+        run: yarn test
