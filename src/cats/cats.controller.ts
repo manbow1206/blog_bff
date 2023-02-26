@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpCode,
     Param,
@@ -15,11 +16,11 @@ import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
 export class CatsController {
     @Post()
     create(@Body() CreateCatDto: CreateCatDto): string {
-        return 'This actions adds a nes cat';
+        return 'This actions adds a new cat';
     }
     @Get()
-    async findAll(@Query() query: ListAllEntities): Promise<any[]> {
-        return [];
+    async findAll(@Query() query: ListAllEntities) {
+        return `This actions find all cats`;
     }
     @Get(':id')
     findOne(@Param() params): string {
@@ -28,6 +29,11 @@ export class CatsController {
     }
     @Put()
     update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-        return ``;
+        return `This action updates a #${id} cat`;
+    }
+
+    @Delete()
+    remove(@Param('id') id: string) {
+        return `This action delete a #${id} cat`;
     }
 }
