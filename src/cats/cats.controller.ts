@@ -10,7 +10,7 @@ import {
     Query,
     Req,
 } from '@nestjs/common';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto/cat.dto';
+import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dtos/cat.dto';
 
 @Controller('cats')
 export class CatsController {
