@@ -37,8 +37,5 @@ jobs:
       - name: exec yarn install
         run: yarn install
 
-      - name: check Nest.js version
-        run: nest -v
-
       - name: exec yarn test
         run: yarn test
