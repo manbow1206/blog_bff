@@ -8,15 +8,23 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
   Req,
   UseFilters,
+  UsePipes,
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
+import { JoiValidationPipe } from 'src/pipe/joivalidation.pipe';
 import { CatsService } from './cats.service';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dtos/cat.dto';
+import {
+  CreateCatDto,
+  createCatSchema,
+  ListAllEntities,
+  UpdateCatDto,
+} from './dtos/cat.dto';
 
 @Controller('cats')
 export class CatsController {
@@ -26,6 +34,7 @@ export class CatsController {
   ) {}
   @Post()
   @UseFilters(HttpExceptionFilter)
+  @UsePipes(new JoiValidationPipe(createCatSchema))
   create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }
@@ -38,7 +47,7 @@ export class CatsController {
     }
   }
   @Get(':id')
-  findOne(@Param("id", ParseIntPipe) id: number){
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.findOne(id);
   }
   @Put()
