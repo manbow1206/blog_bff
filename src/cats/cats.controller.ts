@@ -38,9 +38,8 @@ export class CatsController {
     }
   }
   @Get(':id')
-  findOne(@Param() params): string {
-    console.log(params.id);
-    return `This action returns a #${params.id} cat`;
+  findOne(@Param("id", ParseIntPipe) id: number){
+    return this.catsService.findOne(id);
   }
   @Put()
   update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
