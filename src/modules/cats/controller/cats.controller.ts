@@ -30,9 +30,9 @@ import {
   ListAllEntities,
   UpdateCatDto,
 } from '../dto/cats.dto';
+import { Roles } from 'src/decorator/roles.decorator';
 
 @Controller('cats')
-@UseGuards(new RolesGuard())
 export class CatsController {
   constructor(
     private catsService: CatsService,
@@ -41,7 +41,7 @@ export class CatsController {
   @Post()
   @UseFilters(HttpExceptionFilter)
   @UsePipes(new JoiValidationPipe(createCatSchema))
-  @SetMetadata('roles', ['admin'])
+  @Roles('admin')
   create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }
