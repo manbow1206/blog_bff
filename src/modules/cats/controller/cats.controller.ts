@@ -29,7 +29,7 @@ import {
   createCatSchema,
   ListAllEntities,
   UpdateCatDto,
-} from '../dto/cat.dto';
+} from '../dto/cats.dto';
 
 @Controller('cats')
 @UseGuards(new RolesGuard())
