@@ -15,20 +15,24 @@ import {
   Put,
   Query,
   Req,
+  SetMetadata,
   UseFilters,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
+import { RolesGuard } from 'src/guard/roles.guard';
 import { JoiValidationPipe } from 'src/pipe/joivalidation.pipe';
-import { CatsService } from './cats.service';
+import { CatsService } from '../service/cats.service';
 import {
   CreateCatDto,
   createCatSchema,
   ListAllEntities,
   UpdateCatDto,
-} from './dtos/cat.dto';
+} from '../dto/cat.dto';
 
 @Controller('cats')
+@UseGuards(new RolesGuard())
 export class CatsController {
   constructor(
     private catsService: CatsService,
@@ -37,6 +41,7 @@ export class CatsController {
   @Post()
   @UseFilters(HttpExceptionFilter)
   @UsePipes(new JoiValidationPipe(createCatSchema))
+  @SetMetadata('roles', ['admin'])
   create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }
