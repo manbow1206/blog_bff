@@ -9,10 +9,10 @@ export class CatsService {
     this.cats.push(cat);
   }
 
-  findAll(): Cat[] {
+  findAll(activityOnly, page): Cat[] {
     return this.cats;
   }
   findOne(id) {
-    return this.cats[id]
+    return this.cats[id];
   }
 }

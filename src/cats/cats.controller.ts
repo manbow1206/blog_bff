@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   ForbiddenException,
   Get,
@@ -8,6 +9,7 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -39,15 +41,20 @@ export class CatsController {
     return this.catsService.create(createCatDto);
   }
   @Get()
-  async findAll(@Query() query: ListAllEntities) {
+  async findAll(
+    @Query('activeOnly', new DefaultValuePipe(false), ParseBoolPipe)
+    activityOnly: boolean,
+    @Query('page', new DefaultValuePipe(0), ParseIntPipe)
+    page: number,
+  ) {
     try {
-      await this.catsService.findAll();
+      await this.catsService.findAll(activityOnly, page);
     } catch (error) {
       throw new ForbiddenException();
     }
   }
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', new ParseIntPipe()) id) {
     return this.catsService.findOne(id);
   }
   @Put()
