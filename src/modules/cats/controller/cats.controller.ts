@@ -18,6 +18,7 @@ import {
   SetMetadata,
   UseFilters,
   UseGuards,
+  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
@@ -31,8 +32,10 @@ import {
   UpdateCatDto,
 } from '../dto/cats.dto';
 import { Roles } from 'src/decorator/roles.decorator';
+import { LoggingInterCeptor } from 'src/interceptor/logging.interceptor';
 
 @Controller('cats')
+@UseInterceptors(new LoggingInterCeptor())
 export class CatsController {
   constructor(
     private catsService: CatsService,
